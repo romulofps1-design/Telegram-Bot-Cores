@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body { margin: 0; font-family: sans-serif; color: #fff; padding: 20px; background: #1c1c1e; }
+  .caixa { border-radius: 16px; padding: 20px; }
+  .long   { background: #1b8a4b; }
+  .short  { background: #c0392b; }
+  .neutro { background: #34495e; }
+  h1 { margin: 0 0 8px; font-size: 22px; }
+  p { margin: 0; font-size: 16px; line-height: 1.4; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div id="caixa" class="caixa neutro">
+  <h1 id="titulo"></h1>
+  <p id="texto"></p>
+</div>
+<script>
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) { tg.ready(); tg.expand(); }
+  const q = new URLSearchParams(location.search);
+  const lado = ["long", "short"].includes(q.get("lado")) ? q.get("lado") : "neutro";
+  document.getElementById("caixa").className = "caixa " + lado;
+  const moeda = q.get("moeda") || "";
+  document.getElementById("titulo").textContent = moeda ? moeda + " · " + lado.toUpperCase() : lado.toUpperCase();
+  document.getElementById("texto").textContent = q.get("msg") || "";
+</script>
+</body>
+</html>

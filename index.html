@@ -11,6 +11,9 @@
   .long   { background: #1b8a4b; }
   .short  { background: #c0392b; }
   .neutro { background: #34495e; }
+  .mao    { background: #6c3fb5; }
+  .noticia{ background: #2c5aa0; }
+  .aviso  { background: #b9770e; }
   h1 { margin: 0 0 8px; font-size: 22px; }
   p { margin: 0; font-size: 16px; line-height: 1.4; white-space: pre-wrap; }
 </style>
@@ -24,10 +27,11 @@
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg) { tg.ready(); tg.expand(); }
   const q = new URLSearchParams(location.search);
-  const lado = ["long", "short"].includes(q.get("lado")) ? q.get("lado") : "neutro";
+  const lado = ["long", "short", "mao", "noticia", "aviso"].includes(q.get("lado")) ? q.get("lado") : "neutro";
   document.getElementById("caixa").className = "caixa " + lado;
   const moeda = q.get("moeda") || "";
-  document.getElementById("titulo").textContent = moeda ? moeda + " · " + lado.toUpperCase() : lado.toUpperCase();
+  const titulo = q.get("titulo") || (moeda ? moeda + " · " + lado.toUpperCase() : lado.toUpperCase());
+  document.getElementById("titulo").textContent = titulo;
   document.getElementById("texto").textContent = q.get("msg") || "";
 </script>
 </body>
